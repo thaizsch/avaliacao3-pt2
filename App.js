@@ -1,20 +1,63 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler'
+import * as React from 'react';
+import { Button, View, Text } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+import MinhaLista from './Lista.js'
+import Pastelaria from './pastelaria.js'
+import Calculadora from './calculadora.js'
 
-export default function App() {
+
+function HomeScreen({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        onPress={() => navigation.navigate('Notifications')}
+        title="Go to notifications"
+      />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function NotificationsScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button onPress={() => navigation.goBack()} title="Go back home" />
+    </View>
+  );
+}
+
+function CalculadoraScreen({ navigation }) {
+  return (
+    <Calculadora></Calculadora>
+  );
+}
+
+function PastelariaScreen({ navigation }) {
+  return (
+    <Pastelaria></Pastelaria>
+  );
+}
+
+function ListaScreen({ navigation }) {
+  return (
+    <MinhaLista></MinhaLista>
+  );
+}
+
+
+const Drawer = createDrawerNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+        <Drawer.Screen name="Calculadora" component={CalculadoraScreen} />
+        <Drawer.Screen name="Pastelaria" component={PastelariaScreen} />
+        <Drawer.Screen name="Abrir Lista" component={ListaScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
